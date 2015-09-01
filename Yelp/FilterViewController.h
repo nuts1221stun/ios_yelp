@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DropDownMenu.h"
 
 @interface FilterViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet DropDownMenu *distanceView;
+@property (weak, nonatomic) IBOutlet UIView *sortView;
+@property (weak, nonatomic) IBOutlet UIView *categoryView;
+@property (weak, nonatomic) IBOutlet UISwitch *dealsSwitch;
 
 @end
