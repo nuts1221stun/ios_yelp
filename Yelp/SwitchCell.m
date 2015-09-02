@@ -11,13 +11,17 @@
 @implementation SwitchCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    self.filterSwitch.on = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (IBAction)onSwitchChange:(id)sender {
+    [self.delegate switchCell:self didChangeValue:self.filterSwitch.on];
 }
 
 @end

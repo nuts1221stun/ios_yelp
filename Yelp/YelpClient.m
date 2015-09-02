@@ -52,8 +52,8 @@
         [parameters addEntriesFromDictionary:@{@"radius_filter": @(radius)}];
     }
     
-    if (filters[@"deals"]) {
-        BOOL deals = [filters[@"deals"] boolValue];
+    if (filters[@"deals_filter"]) {
+        BOOL deals = [filters[@"deals_filter"] boolValue];
         [parameters addEntriesFromDictionary:@{@"deals_filter": @(deals)}];
     }
     

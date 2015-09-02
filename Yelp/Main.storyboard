@@ -186,9 +186,9 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kNi-Ac-x3H">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="kNi-Ac-x3H">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LabelCell" id="eSW-bx-fK6" customClass="LabelCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -196,13 +196,18 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eSW-bx-fK6" id="pq5-Of-1Sf">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zgo-qs-3wM">
-                                                    <rect key="frame" x="8" y="11" width="304" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zgo-qs-3wM">
+                                                    <rect key="frame" x="8" y="12" width="312" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Zgo-qs-3wM" firstAttribute="trailing" secondItem="pq5-Of-1Sf" secondAttribute="trailingMargin" constant="8" id="cL6-F3-QUb"/>
+                                                <constraint firstAttribute="centerY" secondItem="Zgo-qs-3wM" secondAttribute="centerY" id="cpv-X2-XJJ"/>
+                                                <constraint firstItem="Zgo-qs-3wM" firstAttribute="leading" secondItem="pq5-Of-1Sf" secondAttribute="leadingMargin" id="wcP-GK-LYa"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="label" destination="Zgo-qs-3wM" id="1rb-w1-mhh"/>
@@ -214,16 +219,56 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tob-lz-tet" id="4Nh-gu-GdG">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Option" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sfa-eQ-EDX">
-                                                    <rect key="frame" x="8" y="11" width="304" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Option" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sfa-eQ-EDX">
+                                                    <rect key="frame" x="8" y="12" width="312" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="sfa-eQ-EDX" firstAttribute="leading" secondItem="4Nh-gu-GdG" secondAttribute="leadingMargin" id="43p-vz-uRe"/>
+                                                <constraint firstItem="sfa-eQ-EDX" firstAttribute="trailing" secondItem="4Nh-gu-GdG" secondAttribute="trailingMargin" constant="8" id="TCQ-do-crv"/>
+                                                <constraint firstAttribute="centerY" secondItem="sfa-eQ-EDX" secondAttribute="centerY" id="Yrh-7z-ppI"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="optionLabel" destination="sfa-eQ-EDX" id="v4K-mv-aMa"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SwitchCell" id="XeP-LS-qZv" customClass="SwitchCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XeP-LS-qZv" id="sx5-EH-f8Y">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e6v-sS-gHR">
+                                                    <rect key="frame" x="263" y="6" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="qTi-Nj-GC7"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="onSwitchChange:" destination="XeP-LS-qZv" eventType="valueChanged" id="Ep0-tW-UkP"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qjt-8g-Ads">
+                                                    <rect key="frame" x="8" y="12" width="247" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="qjt-8g-Ads" secondAttribute="centerY" id="M2G-X8-xC7"/>
+                                                <constraint firstItem="e6v-sS-gHR" firstAttribute="leading" secondItem="qjt-8g-Ads" secondAttribute="trailing" constant="8" id="Xzg-5S-pai"/>
+                                                <constraint firstItem="qjt-8g-Ads" firstAttribute="leading" secondItem="sx5-EH-f8Y" secondAttribute="leadingMargin" id="aH6-Rd-lzZ"/>
+                                                <constraint firstAttribute="centerY" secondItem="e6v-sS-gHR" secondAttribute="centerY" id="f4W-Zc-lQi"/>
+                                                <constraint firstItem="e6v-sS-gHR" firstAttribute="trailing" secondItem="sx5-EH-f8Y" secondAttribute="trailingMargin" id="gZV-Pu-YYd"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="filterSwitch" destination="e6v-sS-gHR" id="P8Q-05-cbS"/>
+                                            <outlet property="label" destination="qjt-8g-Ads" id="6Rc-aA-6aI"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
