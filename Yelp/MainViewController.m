@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "YelpClient.h"
 #import "RestaurantCell.h"
+#import "FilterViewController.h"
 #import <UIImageView+AFNetworking.h>
 
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
@@ -16,7 +17,7 @@ NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
 NSString * const kYelpToken = @"uRcRswHFYa1VkDrGV6LAW2F8clGh5JHV";
 NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate>
 
 @property (nonatomic, strong) YelpClient *client;
 @property (nonatomic, strong) NSArray *restaurants;
@@ -36,12 +37,12 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
         
-        [self searchAndReloadWithTerm:@"Thai"];
+        [self searchAndReloadWithTermAndFilters:@"Thai" filters:nil];
     }
 }
 
-- (void)searchAndReloadWithTerm:(NSString *)term {
-    [self.client searchWithTermAndFilters:term filters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+- (void)searchAndReloadWithTermAndFilters:(NSString *)term filters:(NSDictionary *)filters {
+    [self.client searchWithTermAndFilters:term filters:filters success:^(AFHTTPRequestOperation *operation, id response) {
         NSDictionary *dict = (NSDictionary *)response;
         self.restaurants = dict[@"businesses"];
         [self.searchResultsTable reloadData];
@@ -118,6 +119,16 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     cell.categoryLabel.text = categoryString;
 
     return cell;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    FilterViewController *filterVC = segue.destinationViewController;
+    filterVC.delegate = self;
+}
+
+- (void)uiViewController:(UIViewController *)viewController didUpdateFilters:(NSDictionary *)filters {
+    NSLog(@"===%@", filters);
+    [self searchAndReloadWithTermAndFilters:@"Thai" filters:filters];
 }
 
 @end

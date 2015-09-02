@@ -35,19 +35,20 @@
     
     [parameters addEntriesFromDictionary:@{@"term": term, @"ll" : @"37.774866,-122.394556"}];
     
-    if (filters[@"category"]) {
-        NSArray *filterArray = (NSArray *)filters[@"category"];
-        NSString *filterString = [[filterArray valueForKey:@"description"] componentsJoinedByString:@","];
-        [parameters addEntriesFromDictionary:@{@"category_filter": filterString}];
+    if (filters[@"category_filter"]) {
+        NSString *categoryString = (NSString *)filters[@"category_filter"];
+        if (![categoryString isEqualToString:@""]) {
+            [parameters addEntriesFromDictionary:@{@"category_filter": filters[@"category_filter"]}];
+        }
     }
     
     if (filters[@"sort"]) {
-        int sort = (int)filters[@"sort"];
+        long sort = [filters[@"sort"] integerValue];
         [parameters addEntriesFromDictionary:@{@"sort": @(sort)}];
     }
     
-    if (filters[@"radius"]) {
-        float radius = [filters[@"radius"] floatValue];
+    if ([filters[@"radius_filter"] integerValue] >= 0) {
+        float radius = [filters[@"radius_filter"] floatValue];
         [parameters addEntriesFromDictionary:@{@"radius_filter": @(radius)}];
     }
     
@@ -55,6 +56,8 @@
         BOOL deals = [filters[@"deals"] boolValue];
         [parameters addEntriesFromDictionary:@{@"deals_filter": @(deals)}];
     }
+    
+    NSLog(@"%@", parameters);
     
     return [self GET:@"search" parameters:parameters success:success failure:failure];
 }

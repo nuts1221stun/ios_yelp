@@ -7,13 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DropDownMenu.h"
+#import "DropDownList.h"
+
+@class FilterViewController;
+
+@protocol FilterViewControllerDelegate <NSObject>
+
+- (void)uiViewController:(UIViewController *)viewController didUpdateFilters:(NSDictionary *)filters;
+
+@end
+
 
 @interface FilterViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet DropDownMenu *distanceView;
-@property (weak, nonatomic) IBOutlet UIView *sortView;
-@property (weak, nonatomic) IBOutlet UIView *categoryView;
-@property (weak, nonatomic) IBOutlet UISwitch *dealsSwitch;
+@property (weak, nonatomic) IBOutlet UITableView *filterTable;
+@property (weak, nonatomic) id<FilterViewControllerDelegate> delegate;
+@property (strong, nonatomic) NSArray *sectionTitles;
+@property (strong, nonatomic) NSArray *sectionInfos;
 
 @end

@@ -25,7 +25,11 @@
 		9B1F3A3D1B905C4600721D5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B1F3A3C1B905C4600721D5E /* Main.storyboard */; };
 		9B1F3A411B93FE1400721D5E /* RestaurantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1F3A401B93FE1400721D5E /* RestaurantCell.m */; };
 		9B1F3A441B942CFE00721D5E /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1F3A431B942CFE00721D5E /* FilterViewController.m */; };
-		9B1F3A4A1B95587100721D5E /* DropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1F3A491B95587100721D5E /* DropDownMenu.m */; };
+		9B1F3A551B958B3400721D5E /* DropDownListOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1F3A531B958B3400721D5E /* DropDownListOption.m */; };
+		9B1F3A591B958CBE00721D5E /* DropDownList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1F3A581B958CBE00721D5E /* DropDownList.m */; };
+		9B1F3A5C1B95A0FB00721D5E /* OptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1F3A5B1B95A0FB00721D5E /* OptionCell.m */; };
+		9B1F3A5F1B95A3FE00721D5E /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1F3A5E1B95A3FE00721D5E /* SwitchCell.m */; };
+		9B1F3A621B95A43500721D5E /* LabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1F3A611B95A43500721D5E /* LabelCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +69,16 @@
 		9B1F3A401B93FE1400721D5E /* RestaurantCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantCell.m; sourceTree = "<group>"; };
 		9B1F3A421B942CFE00721D5E /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		9B1F3A431B942CFE00721D5E /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
-		9B1F3A481B95587100721D5E /* DropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownMenu.h; sourceTree = "<group>"; };
-		9B1F3A491B95587100721D5E /* DropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownMenu.m; sourceTree = "<group>"; };
+		9B1F3A521B958B3400721D5E /* DropDownListOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownListOption.h; sourceTree = "<group>"; };
+		9B1F3A531B958B3400721D5E /* DropDownListOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownListOption.m; sourceTree = "<group>"; };
+		9B1F3A571B958CBE00721D5E /* DropDownList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownList.h; sourceTree = "<group>"; };
+		9B1F3A581B958CBE00721D5E /* DropDownList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownList.m; sourceTree = "<group>"; };
+		9B1F3A5A1B95A0FB00721D5E /* OptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionCell.h; sourceTree = "<group>"; };
+		9B1F3A5B1B95A0FB00721D5E /* OptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionCell.m; sourceTree = "<group>"; };
+		9B1F3A5D1B95A3FE00721D5E /* SwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchCell.h; sourceTree = "<group>"; };
+		9B1F3A5E1B95A3FE00721D5E /* SwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchCell.m; sourceTree = "<group>"; };
+		9B1F3A601B95A43500721D5E /* LabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelCell.h; sourceTree = "<group>"; };
+		9B1F3A611B95A43500721D5E /* LabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelCell.m; sourceTree = "<group>"; };
 		9DEC6D18C14F46F8AF2EA320 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -194,12 +206,28 @@
 		9B1F3A3E1B93FDBF00721D5E /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
+				9B1F3A4B1B957A3F00721D5E /* DropDownList */,
 				9B1F3A3F1B93FE1400721D5E /* RestaurantCell.h */,
 				9B1F3A401B93FE1400721D5E /* RestaurantCell.m */,
-				9B1F3A481B95587100721D5E /* DropDownMenu.h */,
-				9B1F3A491B95587100721D5E /* DropDownMenu.m */,
+				9B1F3A5D1B95A3FE00721D5E /* SwitchCell.h */,
+				9B1F3A5E1B95A3FE00721D5E /* SwitchCell.m */,
+				9B1F3A5A1B95A0FB00721D5E /* OptionCell.h */,
+				9B1F3A5B1B95A0FB00721D5E /* OptionCell.m */,
+				9B1F3A601B95A43500721D5E /* LabelCell.h */,
+				9B1F3A611B95A43500721D5E /* LabelCell.m */,
 			);
 			name = "UI Components";
+			sourceTree = "<group>";
+		};
+		9B1F3A4B1B957A3F00721D5E /* DropDownList */ = {
+			isa = PBXGroup;
+			children = (
+				9B1F3A521B958B3400721D5E /* DropDownListOption.h */,
+				9B1F3A531B958B3400721D5E /* DropDownListOption.m */,
+				9B1F3A571B958CBE00721D5E /* DropDownList.h */,
+				9B1F3A581B958CBE00721D5E /* DropDownList.m */,
+			);
+			name = DropDownList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,12 +362,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B1F3A411B93FE1400721D5E /* RestaurantCell.m in Sources */,
+				9B1F3A5C1B95A0FB00721D5E /* OptionCell.m in Sources */,
+				9B1F3A551B958B3400721D5E /* DropDownListOption.m in Sources */,
+				9B1F3A591B958CBE00721D5E /* DropDownList.m in Sources */,
 				42FD6C5B18DC286B000BF2B9 /* AppDelegate.m in Sources */,
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
 				9B1F3A441B942CFE00721D5E /* FilterViewController.m in Sources */,
+				9B1F3A621B95A43500721D5E /* LabelCell.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
-				9B1F3A4A1B95587100721D5E /* DropDownMenu.m in Sources */,
+				9B1F3A5F1B95A3FE00721D5E /* SwitchCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

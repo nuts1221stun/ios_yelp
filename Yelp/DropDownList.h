@@ -1,5 +1,5 @@
 //
-//  DropDownMenu.h
+//  DropDownList.h
 //  Yelp
 //
 //  Created by Li-Erh å¼µåŠ›å…’ Chang on 9/1/15.
@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DropDownMenu : UIView <UITableViewDataSource, UITableViewDelegate>
+@interface DropDownList : UIView <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UIButton *button;
-@property (strong, nonatomic) UITableView *menuTable;
+@property (strong, nonatomic) UITableView *optionTable;
 
-@property (strong, nonatomic) NSArray *items;
+@property (strong, nonatomic) NSArray *options;
 
 @end
