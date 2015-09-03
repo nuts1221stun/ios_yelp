@@ -17,10 +17,12 @@ NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
 NSString * const kYelpToken = @"uRcRswHFYa1VkDrGV6LAW2F8clGh5JHV";
 NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) YelpClient *client;
 @property (nonatomic, strong) NSArray *restaurants;
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) NSString *searchText;
 
 @end
 
@@ -37,8 +39,20 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
         
-        [self searchAndReloadWithTermAndFilters:@"Thai" filters:nil];
+        //[self searchAndReloadWithTermAndFilters:@"Thai" filters:nil];
+        
+        // search bar
+        self.searchText = @"";
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+        self.navigationItem.titleView = self.searchBar;
+        self.searchBar.delegate = self;
     }
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    self.searchText = searchBar.text;
+    [searchBar resignFirstResponder];
+    [self searchAndReloadWithTermAndFilters:self.searchText filters:nil];
 }
 
 - (void)searchAndReloadWithTermAndFilters:(NSString *)term filters:(NSDictionary *)filters {
@@ -127,8 +141,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 }
 
 - (void)uiViewController:(UIViewController *)viewController didUpdateFilters:(NSDictionary *)filters {
-    NSLog(@"===%@", filters);
-    [self searchAndReloadWithTermAndFilters:@"Thai" filters:filters];
+    [self searchAndReloadWithTermAndFilters:self.searchText filters:filters];
 }
 
 @end
