@@ -23,6 +23,7 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @property (nonatomic, strong) NSArray *restaurants;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) NSString *searchText;
+@property (nonatomic, strong) NSDictionary *filters;
 
 @end
 
@@ -35,6 +36,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     if (self) {
         self.searchResultsTable.dataSource = self;
         self.searchResultsTable.delegate = self;
+        self.searchResultsTable.rowHeight = UITableViewAutomaticDimension;
+        self.searchResultsTable.estimatedRowHeight = 120.0;
         
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
@@ -112,7 +115,9 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
         } failure:nil];
     
     cell.nameLabel.text = restaurant[@"name"];
-    cell.distanceLabel.text = [NSString stringWithFormat:@"%ld", (long)[restaurant[@"distance"] integerValue]];
+    float dist = [restaurant[@"distance"] floatValue];
+    dist = dist / 1000;
+    cell.distanceLabel.text = [NSString stringWithFormat:@"%.01fkm", dist];
     cell.reviewCountLabel.text = [NSString stringWithFormat:@"%ld", (long)[restaurant[@"review_count"] integerValue]];
     // location.address
     NSDictionary *location = restaurant[@"location"];
@@ -138,9 +143,13 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     FilterViewController *filterVC = segue.destinationViewController;
     filterVC.delegate = self;
+    if (self.filters) {
+        filterVC.filters = self.filters;
+    }
 }
 
 - (void)uiViewController:(UIViewController *)viewController didUpdateFilters:(NSDictionary *)filters {
+    self.filters = filters;
     [self searchAndReloadWithTermAndFilters:self.searchText filters:filters];
 }
 

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DropDownList.h"
 
 @class FilterViewController;
 
@@ -23,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *filterTable;
 @property (weak, nonatomic) id<FilterViewControllerDelegate> delegate;
 @property (strong, nonatomic) NSArray *sectionTitles;
-@property (strong, nonatomic) NSArray *sectionInfos;
+@property (strong, nonatomic) NSMutableArray *sectionInfos;
+@property (strong, nonatomic) NSDictionary *filters;
 
 @end

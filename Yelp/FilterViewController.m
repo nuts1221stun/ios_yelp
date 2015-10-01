@@ -7,7 +7,6 @@
 //
 
 #import "FilterViewController.h"
-#import "DropDownList.h"
 #import "LabelCell.h"
 #import "OptionCell.h"
 #import "SwitchCell.h"
@@ -71,16 +70,19 @@
                @[
                    @"Hotels & Travel",
                    @"Food",
-                   @"Transport"
+                   @"Transport",
+                   @"Bakeries"
                 ],
             @"optionValues":
                @[
                    @"hotelstravel",
                    @"food",
-                   @"transport"
+                   @"transport",
+                   @"bakeries"
                 ],
             @"optionStatus":
                 @[
+                    @(NO),
                     @(NO),
                     @(NO),
                     @(NO)
@@ -105,12 +107,70 @@
         }
     ];
     
-    self.sectionInfos = @[ distanceDict, sortDict, categoryDict, generalFeaturesDict ];
+    self.sectionInfos = [[NSMutableArray alloc] initWithArray:
+        @[
+            distanceDict, sortDict, categoryDict, generalFeaturesDict
+        ]
+    ];
+    [self fetchFromFilters];
     
     self.filterTable.delegate = self;
     self.filterTable.dataSource = self;
     
     self.filterTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (void)fetchFromFilters {
+    if (self.filters == nil) {
+        return;
+    }
+    int i = 0;
+    for (NSMutableDictionary *info in self.sectionInfos) {
+        NSString *sectionTitle = self.sectionTitles[i];
+        if (![sectionTitle isEqualToString:@"General Features"]) {
+            if ([sectionTitle isEqualToString:@"Category"]) {
+                if (self.filters[@"category_filter"] != nil) {
+                    NSArray *optionValueArray = [self.filters[@"category_filter"] componentsSeparatedByString: @", "];
+                    NSMutableArray *optionStatusArray = [[NSMutableArray alloc] initWithArray:(NSArray *)info[@"optionStatus"]];
+                    int j = 0;
+                    for (NSString *optionValue in (NSArray *)info[@"optionValues"]) {
+                        NSMutableSet * matches = [NSMutableSet setWithArray:optionValueArray];
+                        NSString *matchPattern = [NSString stringWithFormat:@"SELF contains[c] '%@'", optionValue];
+                        [matches filterUsingPredicate:[NSPredicate predicateWithFormat:matchPattern]];
+                        if ([matches containsObject:optionValue]) {
+                            [optionStatusArray replaceObjectAtIndex:(NSUInteger)j withObject:@(YES)];
+                        }
+                        j++;
+                    }
+                    
+                    [info setObject:optionStatusArray forKey:@"optionStatus"];
+                }
+                
+            } else {
+                int j = 0;
+                for (NSString *optionValue in (NSArray *)info[@"optionValues"]) {
+                    long selectedValue = [self.filters[info[@"value"]] integerValue];
+                    if ([optionValue integerValue] == selectedValue) {
+                        [info setObject:@(j) forKey:@"selected"];
+                    }
+                    j++;
+                }
+            }
+        } else {// general features
+            int j = 0;
+            NSMutableArray *optionStatusArray = [[NSMutableArray alloc] initWithArray:(NSArray *)info[@"optionStatus"]];
+            NSLog(@"!!!!! %@ %@ %@", sectionTitle, info[@"optionValues"], optionStatusArray);
+            for (NSString *optionValue in (NSArray *)info[@"optionValues"]) {
+                if ([self.filters objectForKey:optionValue] != nil &&
+                    [[self.filters objectForKey:optionValue] integerValue] == 1) {
+                    [optionStatusArray replaceObjectAtIndex:(NSUInteger)j withObject:@(YES)];
+                }
+                j++;
+            }
+            [info setObject:optionStatusArray forKey:@"optionStatus"];
+        }
+        i++;
+    }
 }
 
 
@@ -141,7 +201,6 @@
             int j = 0;
             for (NSString *optionValue in (NSArray *)info[@"optionValues"]) {
                 BOOL optionStatus = [((NSArray *)info[@"optionStatus"])[j] boolValue];
-                NSLog(@"%@ %d", optionValue, optionStatus);
                 if (optionStatus) {
                     [filterDict setValue:@(optionStatus) forKey:optionValue];
                 }
@@ -150,7 +209,7 @@
         }
         i++;
     }
-
+    NSLog(@"====== %@", filterDict);
     [self.delegate uiViewController:self didUpdateFilters:filterDict];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -165,12 +224,16 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSDictionary *sectionDictionary = self.sectionInfos[section];
     NSArray *options = (NSArray *)sectionDictionary[@"options"];
-    BOOL isSectionActive = [sectionDictionary[@"active"] boolValue];    
+    BOOL isSectionActive = [sectionDictionary[@"active"] boolValue];
+    NSString *sectionTitle = self.sectionTitles[section];
     
     if (isSectionActive) {
         return options.count;
     }
-
+    if ([sectionTitle isEqualToString:@"Category"]) {
+        return 3;
+    }
+    
     return 1;
 }
 
@@ -185,21 +248,51 @@
     
     if (![sectionTitle isEqualToString:@"General Features"]) {
         BOOL isSectionActive = [sectionDictionary[@"active"] boolValue];
-        if (isSectionActive) {
+        if (isSectionActive) { // section is active
             OptionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OptionCell" forIndexPath:indexPath];
             cell.optionLabel.text = options[indexPath.row];
+            if ([sectionTitle isEqualToString:@"Category"]) {
+                NSArray *optionStatus = (NSArray *)sectionDictionary[@"optionStatus"];
+                if ([optionStatus[indexPath.row] boolValue]) {
+                    cell.optionImage.image = [UIImage imageNamed:@"optionSelected.png"];
+                } else {
+                    cell.optionImage.image = [UIImage imageNamed:@"option.png"];
+                }
+            } else {
+                if ([options[indexPath.row] isEqualToString:(NSString *)options[[sectionDictionary[@"selected"] integerValue]]]) {
+                    cell.optionImage.image = [UIImage imageNamed:@"optionSelected.png"];
+                } else {
+                    cell.optionImage.image = [UIImage imageNamed:@"option.png"];
+                }
+            }
             return cell;
         }
-        LabelCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LabelCell" forIndexPath:indexPath];
+        // section is not active
         if ([sectionTitle isEqualToString:@"Category"]) {
-            cell.label.text = sectionDictionary[@"selected"];
+            if (indexPath.row < 2) {
+                OptionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OptionCell" forIndexPath:indexPath];
+                cell.optionLabel.text = options[indexPath.row];
+                NSArray *optionStatus = (NSArray *)sectionDictionary[@"optionStatus"];
+                if ([optionStatus[indexPath.row] boolValue]) {
+                    cell.optionImage.image = [UIImage imageNamed:@"optionSelected.png"];
+                } else {
+                    cell.optionImage.image = [UIImage imageNamed:@"option.png"];
+                }
+                return cell;
+            } else {
+                LabelCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LabelCell" forIndexPath:indexPath];
+                cell.label.text = @"More";
+                return cell;
+            }
         } else {
+            LabelCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LabelCell" forIndexPath:indexPath];
             cell.label.text = (NSString *)options[[sectionDictionary[@"selected"] integerValue]];
+            return cell;
         }
-        return cell;
-    } else { // general features
+    } else { // general features (switch cell)
         SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell" forIndexPath:indexPath];
         cell.label.text = options[indexPath.row];
+        [cell.filterSwitch setOn:[sectionDictionary[@"optionStatus"][indexPath.row] boolValue]];
         cell.delegate = self;
         return cell;
     }
@@ -216,7 +309,6 @@
     }
 
     if (isSectionActive) {
-        [sectionDictionary setValue:@(NO) forKeyPath:@"active"];
         if ([sectionTitle isEqualToString:@"Category"]) {
             NSMutableArray *optionStatus = [[NSMutableArray alloc] initWithArray:(NSArray *)sectionDictionary[@"optionStatus"]];
             NSArray *optionValues = (NSArray *)sectionDictionary[@"optionValues"];
@@ -245,6 +337,7 @@
             [sectionDictionary setValue:selectedString forKey:@"selected"];
             [sectionDictionary setValue:selectedValueString forKey:@"selectedValue"];
         } else {
+            [sectionDictionary setValue:@(NO) forKeyPath:@"active"];
             [sectionDictionary setValue:@(indexPath.row) forKeyPath:@"selected"];
         }
     } else {
